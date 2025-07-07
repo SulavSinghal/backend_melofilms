@@ -5,7 +5,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const Opportunity = require('../models/upcomingopp');
+const Opportunity = require('../models/opportunity');
 
 // Upload folder path
 const uploadPath = path.join(__dirname, '..', 'uploads', 'opportunities');

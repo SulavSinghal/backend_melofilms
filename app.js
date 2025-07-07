@@ -22,7 +22,7 @@ const adminRoutes = require('./routes/auth');
 const contactRoutes = require('./routes/contact');
 const contactInfoRoutes = require('./routes/ContactInfoRoutes');
 const aboutRoutes = require('./routes/aboutUs');
-const oppurtunity = require('./routes/upcomingopp_route');
+const oppurtunity = require('./routes/opportunities');
 
 // Use Routes
 app.use('/api/films', filmRoutes);

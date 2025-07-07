@@ -19,4 +19,4 @@ const upcomingOpportunitySchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-module.exports = mongoose.model('UpcomingOpportunity', upcomingOpportunitySchema);
+module.exports = mongoose.model('Opportunity', upcomingOpportunitySchema);
