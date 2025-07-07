@@ -12,7 +12,6 @@ const upcomingOpportunitySchema = new mongoose.Schema({
   },
   desc: {
     type: String,
-    required: true,
   },
   bannerImg: {
     type: String, // Store image URL or filename

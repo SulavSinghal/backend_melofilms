@@ -1,3 +1,5 @@
+// routes/opportunityRoutes.js
+
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
@@ -21,10 +23,30 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage }).single('bannerImg');
 
-// POST /api/opportunity/add
-router.post('/add', (req, res) => {
-  console.log('POST /api/opportunity/add hit');
+// ✅ GET /api/opportunities – Fetch all
+router.get('/', async (req, res) => {
+  try {
+    const all = await Opportunity.find().sort({ createdAt: -1 });
+    res.json(all);
+  } catch (error) {
+    console.error('Fetch Error:', error);
+    res.status(500).json({ error: 'Failed to fetch opportunities' });
+  }
+});
 
+// ✅ GET /api/opportunities/latest – Fetch most recent
+router.get('/latest', async (req, res) => {
+  try {
+    const latest = await Opportunity.findOne().sort({ createdAt: -1 });
+    res.json(latest);
+  } catch (error) {
+    console.error('Fetch Latest Error:', error);
+    res.status(500).json({ error: 'Failed to fetch opportunity' });
+  }
+});
+
+// ✅ POST /api/opportunities – Add new
+router.post('/', (req, res) => {
   upload(req, res, async function (err) {
     if (err) {
       console.error('Upload Error:', err);
@@ -32,7 +54,6 @@ router.post('/add', (req, res) => {
     }
 
     const { endsAt, title, desc } = req.body;
-
     const newOpportunity = new Opportunity({
       endsAt,
       title,
@@ -49,20 +70,51 @@ router.post('/add', (req, res) => {
     }
   });
 });
-// in upcomingopp_route.js (or now opportunityRoutes.js)
-router.get('/latest', async (req, res) => {
+
+// ✅ PUT /api/opportunities/:id – Update
+router.put('/:id', (req, res) => {
+  upload(req, res, async function (err) {
+    if (err) {
+      console.error('Upload Error:', err);
+      return res.status(500).json({ error: 'Image upload failed' });
+    }
+
+    const { endsAt, title, desc } = req.body;
+    const updateData = { endsAt, title, desc };
+
+    if (req.file) {
+      updateData.bannerImg = `/uploads/opportunities/${req.file.filename}`;
+    }
+
+    try {
+      const updated = await Opportunity.findByIdAndUpdate(req.params.id, updateData, { new: true });
+      if (!updated) return res.status(404).json({ error: 'Opportunity not found' });
+      res.json(updated);
+    } catch (error) {
+      console.error('Update Error:', error);
+      res.status(500).json({ error: 'Failed to update opportunity' });
+    }
+  });
+});
+
+// ✅ DELETE /api/opportunities/:id – Delete
+router.delete('/:id', async (req, res) => {
   try {
-    const latestOpportunity = await Opportunity.findOne().sort({ createdAt: -1 });
-    res.json(latestOpportunity);
+    const deleted = await Opportunity.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ error: 'Opportunity not found' });
+
+    if (deleted.bannerImg) {
+      const imagePath = path.join(__dirname, '..', deleted.bannerImg);
+      fs.unlink(imagePath, (err) => {
+        if (err) console.warn('Failed to delete image:', err.message);
+      });
+    }
+
+    res.json({ message: 'Opportunity deleted successfully' });
   } catch (error) {
-    console.error('Error fetching latest opportunity:', error);
-    res.status(500).json({ error: 'Failed to fetch opportunity' });
+    console.error('Delete Error:', error);
+    res.status(500).json({ error: 'Failed to delete opportunity' });
   }
 });
-
-router.post('/test', (req, res) => {
-  res.send('Test route works');
-});
-
 
 module.exports = router;

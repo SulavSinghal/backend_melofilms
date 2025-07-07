@@ -30,7 +30,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/contact-info', contactInfoRoutes);
 app.use('/api/aboutUs', aboutRoutes); 
-app.use('/api/opportunity',oppurtunity);
+app.use('/api/opportunities',oppurtunity);
 
 // Start server
 const PORT = process.env.PORT || 5000;
