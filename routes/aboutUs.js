@@ -8,7 +8,7 @@ const fs = require('fs');
 const AboutUs = require('../models/aboutUs'); // Adjust path as needed
 
 // --- Multer Setup for DISTINCT file fields ---
-const uploadPath = path.join(__dirname, '..', 'uploads', 'aboutUs');
+const uploadPath = '/var/www/melofilms_uploads/aboutUs';
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });
 }

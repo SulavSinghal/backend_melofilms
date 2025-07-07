@@ -8,7 +8,7 @@ const fs = require('fs');
 const Opportunity = require('../models/opportunity');
 
 // Upload folder path
-const uploadPath = path.join(__dirname, '..', 'uploads', 'opportunities');
+const uploadPath = '/var/www/melofilms_uploads/opportunities';
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });
 }
