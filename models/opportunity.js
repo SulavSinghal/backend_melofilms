@@ -1,4 +1,4 @@
-// models/upcomingOpportunityModel.js
+// models/opportunity.js
 const mongoose = require('mongoose');
 
 const upcomingOpportunitySchema = new mongoose.Schema({

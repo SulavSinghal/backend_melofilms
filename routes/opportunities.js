@@ -1,4 +1,4 @@
-// routes/opportunityRoutes.js
+// routes/opportunities.js
 
 const express = require('express');
 const router = express.Router();
