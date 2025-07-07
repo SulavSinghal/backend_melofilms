@@ -7,6 +7,8 @@ const filmSchema = new mongoose.Schema({
   film_year: { type: Number, required: true },
   film_images: [{ type: String, required: true }],
   film_description: { type: String, required: true },
+  director_name: { type: String, required: true },
+  trailer_url: {type: String, required: false},
   film_type: {
   type: String,
   enum: ['upcoming', 'production','original'],
