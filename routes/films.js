@@ -62,8 +62,8 @@ router.post(
   async (req, res) => {
     try {
       const { film_name, film_genre, film_year, film_description,film_type,director_name} = req.body;
-      const bannerPath = req.files['film_banner'][0].path;
-      const imagePaths = req.files['film_images'].map((file) => file.path);
+     const bannerPath = `/uploads/${req.files['film_banner'][0].filename}`;
+const imagePaths = req.files['film_images']?.map(file => `/uploads/${file.filename}`) || [];
 
       const newFilm = new Film({
         film_banner: bannerPath,
@@ -113,13 +113,12 @@ router.put(
       film.film_type = film_type || film.film_type;
       film.director_name = director_name || film.director_name;
       
-      if (req.files['film_banner']) {
-        film.film_banner = req.files['film_banner'][0].path;
-      }
-
-      if (req.files['film_images']) {
-        film.film_images = req.files['film_images'].map((file) => file.path);
-      }
+    if (req.files['film_banner']) {
+  film.film_banner = `/uploads/${req.files['film_banner'][0].filename}`;
+}
+if (req.files['film_images']) {
+  film.film_images = req.files['film_images'].map(file => `/uploads/${file.filename}`);
+}
 
       await film.save();
 

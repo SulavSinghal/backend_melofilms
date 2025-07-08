@@ -40,7 +40,9 @@ router.get('/', async (req, res) => {
     if (!about) {
       console.log('No AboutUs doc found, creating one.');
       about = await new AboutUs({
-        ourStory: { heading: "Default Heading", paragraph1: "", imageUrl: "", stats: [] },
+        ourStory: { heading: "Default Heading", paragraph1: "test", imageUrl: "./image.png", stats: [{
+          value: "10+", label: "Years of Experience" 
+        }] },
         team: [], clients: [], festivals: [], awards: [],
       }).save();
     }
