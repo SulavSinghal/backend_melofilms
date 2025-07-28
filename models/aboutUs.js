@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const aboutUsSchema = new mongoose.Schema({
   ourStory: {
-    heading: { type: String, required: true },
+    heading: { type: String },
     paragraph1: { type: String, required: true },
     paragraph2: { type: String },
     imageUrl: { type: String, required: true },
